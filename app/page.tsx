@@ -31,6 +31,11 @@ function App() {
     setTodos([...todos, newTodo]);
   }
 
+  function removeTodo(id: number) {
+    // The .filter function returns a new array with only the elements that pass the test
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   console.log(inputRef?.current);
@@ -89,6 +94,13 @@ function App() {
               {todo.completed ? "DONE:" : "TODO:"}
               {todo.title}
             </span>
+
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => removeTodo(todo.id)}
+            >
+              -
+            </button>
           </li>
         ))}
       </ul>
