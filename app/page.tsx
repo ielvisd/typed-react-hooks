@@ -52,13 +52,25 @@ function App() {
     <div className="max-w-600px mx-auto">
       <h1 className="text-2xl font-bold">Todo List</h1>
       {/* Form to add a new todo, using the addTodo function */}
-      <form action="">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          addTodo(todoTitle);
+          setTodoTitle("");
+        }}
+      >
         <input
           className="text-black"
           type="text"
           value={todoTitle}
           onChange={(event) => setTodoTitle(event.target.value)}
         />
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add
+        </button>
       </form>
 
       {/* A list of todos, using .map to iterate over the list */}
