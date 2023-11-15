@@ -36,6 +36,19 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   }
 
+  function setTodosCompleted(id: number, completed: boolean) {
+    setTodos(
+      // The .map function allows us to iterate over the array and return a new array with the same length but different values
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: completed };
+        } else {
+          return todo;
+        }
+      })
+    );
+  }
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   console.log(inputRef?.current);
@@ -90,7 +103,13 @@ function App() {
             key={todo.id}
           >
             <span>
-              <input type="checkbox" checked={todo.completed} />
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={(event) =>
+                  setTodosCompleted(todo.id, event.target.checked)
+                }
+              />
               {todo.completed ? "DONE:" : "TODO:"}
               {todo.title}
             </span>
