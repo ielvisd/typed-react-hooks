@@ -16,8 +16,20 @@ function App() {
     { id: 2, title: "Buy eggs", completed: true },
     { id: 3, title: "Buy bread", completed: false },
   ]);
+  const [todoTitle, setTodoTitle] = useState<string>("");
   const [count, setCount] = useState<number>(0);
   const [users, setUsers] = useState<User[] | null>(null);
+
+  // Add a new Todo item
+  // Checks the current max id and adds a new todo with an id one higher
+  function addTodo(title: string) {
+    let maxId = 0;
+    for (let todo of todos) {
+      maxId = Math.max(maxId, todo.id);
+    }
+    const newTodo: Todo = { id: maxId + 1, title: title, completed: false };
+    setTodos([...todos, newTodo]);
+  }
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,7 +50,18 @@ function App() {
 
   return (
     <div className="max-w-600px mx-auto">
-      {/* A list of todos */}
+      <h1 className="text-2xl font-bold">Todo List</h1>
+      {/* Form to add a new todo, using the addTodo function */}
+      <form action="">
+        <input
+          className="text-black"
+          type="text"
+          value={todoTitle}
+          onChange={(event) => setTodoTitle(event.target.value)}
+        />
+      </form>
+
+      {/* A list of todos, using .map to iterate over the list */}
       <ul className="list-none m-0 p-0 text-black">
         {todos.map((todo) => (
           <li
